@@ -132,24 +132,35 @@
 
 <script>
 setTimeout(init,100);
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
 function init(){
-	var obox = document.getElementById('box'),
-		aDiv = obox.getElementsByTagName('div');
+	var obox = document.getElementById('box'), aDiv = obox.getElementsByTagName('div');
+	// Range number of img
+	var min = 1, max = 50;
+	let numbers = [];
+	for (var i = 0; i < aDiv.length; i++) {
+		let randomNumber;
+		// Generate unique random number
+		do {
+		randomNumber = getRandomNumber(min, max);
+		} while (numbers.includes(randomNumber));
+		numbers.push(randomNumber);
 		
-		for (var i = 0; i < aDiv.length; i++) {
-			aDiv[i].style.background = "url(img/"+(i+1)+".jpg) center/cover";
-			aDiv[i].style.transform = "rotateY("+(i*36)+"deg) translate3d(0,0,350px)";
-			aDiv[i].style.transition = "transform 1s "+(aDiv.length-i)*0.2+"s";
-		}
+		aDiv[i].style.background = "url(img/"+numbers[i]+".jpg) center/cover";
+		aDiv[i].style.transform = "rotateY("+(i*36)+"deg) translate3d(0,0,350px)";
+		aDiv[i].style.transition = "transform 1s "+(aDiv.length-i)*0.2+"s";
+	}
 	var sX,
-		sY,
-		nX,
-		nY,
-		desX = 0,
-		desY = 0,
-		tX = 0,
-		tY = 10,
-		index = 0;//滚轮初始值
+	sY,
+	nX,
+	nY,
+	desX = 0,
+	desY = 0,
+	tX = 0,
+	tY = 10,
+	index = 0;//滚轮初始值
 	document.onmousedown = function(e){
 		clearInterval(obox.timer);
 		e = e || window.event;
